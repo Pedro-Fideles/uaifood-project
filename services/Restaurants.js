@@ -18,18 +18,18 @@ const Restaurants = require('../models/Restaurants');
 */
 
 const handleWithType = async (type) => {
-  const existingType = await Types.findType(type);
+  const existingType = (await Types.findType(type))[0];
 
-  if (existingType) return await Types.createType(type).id;
-  
-  return existingType.id;
+  if (!existingType) return await Types.createType(type);
+
+  return existingType;
 };
 
 const createRestaurant = async (newRestaurant) => {
   const { type, district, city, state } = newRestaurant;
 
   const restaurantToCreate = { ...newRestaurant };
-  /* restaurantToCreate.type = handleWithType(type); */
+  restaurantToCreate.type = (await handleWithType(type)).id;
 
   await Restaurants.createNewRestaurant(restaurantToCreate);
 };

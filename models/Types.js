@@ -1,15 +1,17 @@
 const connection = require('./connection');
 const findByName = require('./helpers/findByName');
 
-const findType = async (name) => await findByName('types', name)[0];
+const findType = async (name) => await findByName('types', name);
 
 const createType = async (typeName) => {
-  const query = 'INSERT INTO (name) VALUES (?)';
+  const query = 'INSERT INTO uaifood.types (name) VALUES (?)';
   const params = [typeName];
 
-  await connection.execute(query, params)
+  await connection.execute(query, params);
 
-  return await findType(typeName);
+  const createdType = await findType(typeName);
+
+  return createdType[0];
 };
 
 module.exports = {

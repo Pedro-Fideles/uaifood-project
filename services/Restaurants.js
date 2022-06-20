@@ -1,5 +1,6 @@
 const Types = require('../models/Types');
 const Districts = require('../models/Districts');
+const Restaurants = require('../models/Restaurants');
 
 /*
 {
@@ -24,9 +25,13 @@ const handleWithType = async (type) => {
   return existingType.id;
 };
 
-const createRestaurant = (newRestaurant) => {
+const createRestaurant = async (newRestaurant) => {
   const { type, district, city, state } = newRestaurant;
 
   const restaurantToCreate = { ...newRestaurant };
-  restaurantToCreate.type = handleWithType(type);
+  /* restaurantToCreate.type = handleWithType(type); */
+
+  await Restaurants.createNewRestaurant(restaurantToCreate);
 };
+
+module.exports = { createRestaurant };

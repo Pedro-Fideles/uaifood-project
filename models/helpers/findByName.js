@@ -1,4 +1,4 @@
-const connection = require('./connection');
+const connection = require('../connection');
 
 const findByName = async (table, name) => {
   const query = `SELECT * FROM uaifood.${table} WHERE name = ?`;

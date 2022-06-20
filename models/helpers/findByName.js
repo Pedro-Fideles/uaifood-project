@@ -6,7 +6,7 @@ const findByName = async (table, name) => {
 
   const [data] = await connection.execute(query, params);
 
-  if(!data) return null;
+  if(!data.length === 0) return null;
 
   return data;
 };

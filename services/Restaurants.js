@@ -63,7 +63,6 @@ const createRestaurant = async (newRestaurant) => {
   const restaurantToCreate = { ...newRestaurant };
   restaurantToCreate.type = (await handleWithType(type)).id;
   restaurantToCreate.district = await handleWithLocalization(district, city, state);
-  console.log(restaurantToCreate.district);
 
   await Restaurants.createNewRestaurant(restaurantToCreate);
 };

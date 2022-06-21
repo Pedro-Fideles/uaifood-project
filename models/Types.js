@@ -11,7 +11,7 @@ const createType = async (typeName) => {
 
   const createdType = await findType(typeName);
 
-  return createdType[0];
+  return createdType;
 };
 
 module.exports = {

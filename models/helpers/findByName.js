@@ -8,7 +8,7 @@ const findByName = async (table, name) => {
 
   if(!data.length === 0) return null;
 
-  return data;
+  return data[0];
 };
 
 module.exports = findByName;

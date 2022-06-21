@@ -1,4 +1,6 @@
 const Types = require('../models/Types');
+const States = require('../models/States');
+const Cities = require('../models/Cities');
 const Districts = require('../models/Districts');
 const Restaurants = require('../models/Restaurants');
 
@@ -18,11 +20,41 @@ const Restaurants = require('../models/Restaurants');
 */
 
 const handleWithType = async (type) => {
-  const existingType = (await Types.findType(type))[0];
+  const existingType = (await Types.findType(type));
 
   if (!existingType) return await Types.createType(type);
 
   return existingType;
+};
+
+const handleWithState = async (stateName) => {
+  const existingState = await States.findState(stateName);
+
+  if (!existingState) return (await States.createState(stateName)).id;
+
+  return existingState.id;
+}
+
+const handleWithCity = async (cityName, stateName) => {
+  const existingCity = await Cities.checkCity(cityName, stateName);
+  
+  if (!existingCity) {
+    const stateId = await handleWithState(stateName);
+    return (await Cities.createCity(cityName, stateId)).id;
+  }
+
+  return existingCity.cityId;
+}
+
+const handleWithLocalization = async (districtName, cityName, stateName) => {
+  const existingDistrict = await Districts.checkDistrict(districtName, cityName, stateName);
+
+  if (!existingDistrict) {
+    const cityId = await handleWithCity(cityName, stateName);
+    return (await Districts.createDistrict(districtName, cityId)).id;
+  }
+
+  return existingDistrict.districtId;
 };
 
 const createRestaurant = async (newRestaurant) => {
@@ -30,6 +62,8 @@ const createRestaurant = async (newRestaurant) => {
 
   const restaurantToCreate = { ...newRestaurant };
   restaurantToCreate.type = (await handleWithType(type)).id;
+  restaurantToCreate.district = await handleWithLocalization(district, city, state);
+  console.log(restaurantToCreate.district);
 
   await Restaurants.createNewRestaurant(restaurantToCreate);
 };

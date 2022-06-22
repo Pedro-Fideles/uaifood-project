@@ -64,9 +64,9 @@ const createRestaurant = async (newRestaurant) => {
   restaurantToCreate.type = (await handleWithType(type)).id;
   restaurantToCreate.district = await handleWithLocalization(district, city, state);
 
-  await Restaurants.createNewRestaurant(restaurantToCreate);
+  const token = await Restaurants.createNewRestaurant(restaurantToCreate);
 
-  return { code: 200, message: 'Restaurante criado com sucesso!' };
+  return { code: 200, message: 'Restaurante criado com sucesso!', token };
 };
 
 module.exports = { createRestaurant };

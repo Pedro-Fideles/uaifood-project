@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post('/restaurants', ...Object.values(middlewaresRestaurants), Restaurants.createRestaurant);
+app.post('/register', ...Object.values(middlewaresRestaurants), Restaurants.createRestaurant);
 
 app.use(errorMiddleware);
 

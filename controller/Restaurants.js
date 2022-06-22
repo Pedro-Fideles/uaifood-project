@@ -1,9 +1,9 @@
 const Restaurants = require('../services/Restaurants');
 
 const createRestaurant = async (req, res) => {
-  const { code, message } = await Restaurants.createRestaurant(req.body);
+  const { code, message, token } = await Restaurants.createRestaurant(req.body);
 
-  res.status(code).json({ message });
+  res.status(code).json({ message, token });
 };
 
 module.exports = { createRestaurant }; 

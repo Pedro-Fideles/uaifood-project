@@ -10,8 +10,8 @@ const createItem = async (req, res, next) => {
 };
 
 const updateItem = async (req, res, next) => {
-  const { id, name, price, token } = req.body;
-  const validation = await Items.updateItem({ id, name, price, token });
+  const { id, name, price, token, ingredients } = req.body;
+  const validation = await Items.updateItem({ id, name, price, token, ingredients });
 
   if (validation) next(validation);
 

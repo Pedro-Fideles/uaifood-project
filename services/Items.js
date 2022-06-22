@@ -14,7 +14,7 @@ const createItem = async (newItem) => {
 };
 
 const updateItem = async (item) => {
-  const { id, token } = item;
+  const { id, token, ingredients } = item;
 
   const restaurant = await Restaurants.findIdByToken(token);
   if (!restaurant) return { code: 422, message: 'Token inválido' };
@@ -23,6 +23,7 @@ const updateItem = async (item) => {
   if (!existingItem) return { code: 404, message: 'item não encontrado' };
 
   await Items.updateItem(item);
+  await Ingredients.updateIngredients({ ingredients, id });
 }
 
 module.exports = { createItem, updateItem };

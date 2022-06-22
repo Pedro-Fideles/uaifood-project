@@ -25,10 +25,6 @@ const createNewItem = async (newItem) => {
 const updateItem = async (item) => {
   const { id, name, price } = item;
 
-  console.log(id);
-  console.log(name);
-  console.log(price);
-
   const query = 'UPDATE uaifood.items SET name = ?, price = ? WHERE id = ?';
   const params = [name, price, id];
 

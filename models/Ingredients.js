@@ -1,25 +1,38 @@
 const connection = require('./connection');
+const findByName = require('./helpers/findByName');
 
-const createIngredient = async (name, item) => {
-  const queryIngredient = 'INSERT INTO uaifood.ingredients (name) VALUES (?);';
-  const paramsIngredient = [name];
+const findIngredient = async (name) => await findByName('ingredients', name);
 
-  const [resultIngredient] = await connection.execute(queryIngredient, paramsIngredient);
+const createIngredient = async (name) => {
+  const existingIngredient = await findIngredient(name);
 
-  const queryItemHasIngredient = `
+  if(existingIngredient) return existingIngredient.id;
+
+  const query = 'INSERT INTO uaifood.ingredients (name) VALUES (?);';
+  const params = [name];
+
+  const [resultIngredient] = await connection.execute(query, params);
+
+  return resultIngredient.insertId;
+}
+
+const createIngredientAndRelationship = async (name, item) => {
+  const ingredient = await createIngredient(name);
+
+  const query = `
     INSERT INTO
       uaifood.items_has_ingredients (item_id, ingredient_id)
     VALUES (?, ?);
   `;
-  const paramsItemHasIngredient = [item, resultIngredient.insertId];
+  const params = [item, ingredient];
 
-  await connection.execute(queryItemHasIngredient, paramsItemHasIngredient);
+  await connection.execute(query, params);
 }
 
 const createIngredients = async (ingredientsInfo) => {
   const { ingredients, item } = ingredientsInfo;
 
-  await Promise.all(ingredients.map((name) => createIngredient(name, item)));
+  await Promise.all(ingredients.map((name) => createIngredientAndRelationship(name, item)));
 }
 
 module.exports = { createIngredients };

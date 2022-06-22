@@ -4,8 +4,6 @@ const createIngredient = async (name, item) => {
   const queryIngredient = 'INSERT INTO uaifood.ingredients (name) VALUES (?);';
   const paramsIngredient = [name];
 
-  console.log(name)
-
   const [resultIngredient] = await connection.execute(queryIngredient, paramsIngredient);
 
   const queryItemHasIngredient = `

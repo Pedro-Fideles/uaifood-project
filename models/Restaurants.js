@@ -28,6 +28,8 @@ const findIdByToken = async (token) => {
 
   const [restaurant] = await connection.execute(query, params);
 
+  if (restaurant.length === 0) return null;
+
   return restaurant[0].id;
 };
 

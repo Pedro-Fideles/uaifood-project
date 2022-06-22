@@ -1,31 +1,12 @@
 const { validateBr } = require('js-brasil');
 
-const { isDefined, isString, lengthIsSmallerThan, isEmpty } = require("./validations/validations");
-
-const errorStatus = 422;
-
-const fieldErrors = {
-  undefinedField: (value) => ({
-    code: errorStatus,
-    message: `o campo ${value} é obrigatório.`
-  }),
-  notString: (value) => ({
-    code: errorStatus,
-    message: `o campo ${value} deve ser string.`
-  }),
-  minLength: (value, size) => ({
-    code: errorStatus,
-    message: `o campo ${value} ter no mínimo ${size} caracteres.`
-  }),
-  invalidFormat: (value) => ({
-    code: errorStatus,
-    message: `o campo ${value} está com um formato inválido.`
-  }),
-  fieldIsEmpty: (value) => ({
-    code: errorStatus,
-    message: `o campo ${value} não deve estar vazio`,
-  }),
-}
+const { 
+  isDefined,
+  isString,
+  lengthIsSmallerThan,
+  isEmpty,
+  fieldErrors
+} = require("./validations/validations");
 
 const validateName = (req, _res, next) => {
   const { name } = req.body;

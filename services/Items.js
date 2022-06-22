@@ -7,6 +7,8 @@ const createItem = async (newItem) => {
 
   const restaurant = await Restaurants.findIdByToken(token);
 
+  if (!restaurant) return { code: 422, message: 'Token inválido' };
+
   const item = await Items.createNewItem({ name, price, restaurant });
 
   await Ingredients.createIngredients({ ingredients, item });

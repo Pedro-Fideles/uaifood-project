@@ -22,6 +22,16 @@ const createNewRestaurant = async (newRestaurant) => {
   return token;
 };
 
+const findIdByToken = async (token) => {
+  const query = 'SELECT id FROM uaifood.restaurants WHERE token = ?;';
+  const params = [token];
+
+  const [restaurant] = await connection.execute(query, params);
+
+  return restaurant[0].id;
+};
+
 module.exports = {
   createNewRestaurant,
+  findIdByToken,
 };

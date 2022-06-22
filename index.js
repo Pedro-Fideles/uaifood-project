@@ -15,6 +15,8 @@ app.post('/register', ...Object.values(middlewaresRestaurants), Restaurants.crea
 
 app.post('/item', ...Object.values(middlewaresItems), Items.createItem);
 
+app.put('/item', ...Object.values(middlewaresItems), Items.updateItem);
+
 app.use(errorMiddleware);
 
 app.listen(3000, () => console.log('ouvindo na porta 3000'));

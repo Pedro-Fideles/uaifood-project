@@ -14,4 +14,14 @@ const createItem = async (newItem) => {
   await Ingredients.createIngredients({ ingredients, item });
 };
 
-module.exports = { createItem };
+const updateItem = async (item) => {
+  const { id } = item;
+
+  const existingItem = await Items.findItemById(id);
+
+  if (!existingItem) return { code: 404, message: 'item não encontrado' };
+
+  await Items.updateItem(item);
+}
+
+module.exports = { createItem, updateItem };

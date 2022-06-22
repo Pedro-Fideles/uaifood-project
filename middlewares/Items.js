@@ -31,7 +31,6 @@ const validatePrice = (req, _res, next) => {
 
 const validateToken = (req, _res, next) => {
   const { token } = req.body;
-
   switch (true) {
     case !isDefined(token): return next(fieldErrors.undefinedField('token'));
     case !isString(token): return next(fieldErrors.notString('token'));
@@ -50,9 +49,23 @@ const validateIngredients = (req, _res, next) => {
   }
 };
 
+const validateId = (req, _res, next) => {
+  if (req.method === 'PUT') {
+    const { id } = req.body;
+
+    switch (true) {
+      case !isDefined(id): return next(fieldErrors.undefinedField('id'));
+      case !isNumber(id): return next(fieldErrors.notNumber('id'));
+      default: return next();
+    }
+  }
+  next();
+}
+
 module.exports = {
   validateName,
   validatePrice,
   validateToken,
-  validateIngredients
+  validateIngredients,
+  validateId
 };

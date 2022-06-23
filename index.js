@@ -17,7 +17,7 @@ app.post('/item', ...Object.values(middlewaresItems), Items.createItem);
 
 app.put('/item', ...Object.values(middlewaresItems), Items.updateItem);
 
-app.get('/restaurant');
+app.get('/restaurants', Restaurants.listWithFilters);
 
 app.use(errorMiddleware);
 

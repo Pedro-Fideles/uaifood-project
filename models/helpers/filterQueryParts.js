@@ -1,8 +1,8 @@
 const queryHeader = () => (`
   SELECT
     res.id AS restaurantId,
-    res.name AS restaurantName,
-    typ.name AS typeName,
+    res.name AS restaurant,
+    typ.name AS type,
     cit.name AS city,
     sta.name AS state
 `);
@@ -31,7 +31,7 @@ const queryInnerJoins = () => (`
   ON res.type_id = typ.id
 `);
 
-const whereTo = (as) => `WHERE ${as}.name LIKE '%?%'`;
+const whereTo = (as) => `WHERE ${as}.name LIKE CONCAT ( '%', ?, '%' )`;
 
 module.exports = {
   queryHeader,

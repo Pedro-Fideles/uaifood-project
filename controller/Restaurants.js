@@ -6,4 +6,13 @@ const createRestaurant = async (req, res) => {
   res.status(code).json({ message, token });
 };
 
-module.exports = { createRestaurant }; 
+const listWithFilters = async (req, res, next) => {
+  const { city, state, type, dish } = req.query;
+  const data = await Restaurants.listWithFilters({ city, state, type, dish });
+
+  if (!data) return next({ code: 404, message: 'nenhum restaurante encontrado.' });
+
+  res.status(200).json(data);
+}
+
+module.exports = { createRestaurant, listWithFilters };

@@ -69,4 +69,6 @@ const createRestaurant = async (newRestaurant) => {
   return { code: 200, message: 'Restaurante criado com sucesso!', token };
 };
 
-module.exports = { createRestaurant };
+const listWithFilters = async (filters) => await Restaurants.listWithFilters(filters);
+
+module.exports = { createRestaurant, listWithFilters };

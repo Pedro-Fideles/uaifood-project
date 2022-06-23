@@ -1,6 +1,6 @@
 const connection = require('./connection');
 const crypto = require('crypto');
-const { queryToListDishs, queryHeader, queryInnerJoins, whereToCity } = require('./helpers/filterQueryParts');
+const { queryToListDishs, queryHeader, queryInnerJoins, whereTo } = require('./helpers/filterQueryParts');
 
 function generateToken() {
   return crypto.randomBytes(8).toString('hex');
@@ -38,23 +38,23 @@ const createWheres = (query, city, state, type, dish) => {
   let newQuery = query;
   const params = [];
   if (city) {
-    query += `\n${whereTo('cit')}`;
+    newQuery += `\n${whereTo('cit')}`;
     params.push(city);
   }
   if (state) {
-    query += `\n${whereTo('sta')}`;
+    newQuery += `\n${whereTo('sta')}`;
     params.push(state);
   }
   if (type) {
-    query += `\n${whereTo('typ')}`;
+    newQuery += `\n${whereTo('typ')}`;
     params.push(type);
   }
   if(dish) {
-    query += `\n${whereTo('ite')}`;
+    newQuery += `\n${whereTo('ite')}`;
     params.push(dish);
   }
 
-  return { query: newQuery, params };
+  return { newQuery, params };
 }
 
 const listWithFilters = async (filters) => {
@@ -68,9 +68,13 @@ const listWithFilters = async (filters) => {
 
   if (dish) query += `\n${queryToListDishs(2)}`;
 
-  const newQuery = createWheres(query, city, state, type, dish);
+  const { newQuery, params } = createWheres(query, city, state, type, dish);
 
-  console.log(newQuery);
+  const [data] = await connection.execute(newQuery, params);
+  
+  if(data.length === 0) return null;
+
+  return data;
 }
 
 module.exports = {

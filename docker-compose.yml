@@ -1,7 +1,6 @@
 version: "3"
 
 services:
-  # Serviço que irá rodar o node
   node:
     # Imagem base do container
     image: node:16
@@ -21,12 +20,25 @@ services:
     volumes:
       # Monta o diretório atual, com todos os dados do projeto, 
       # dentro do diretório /app
-      - ./:/app
+      - ./:/usr/app
     # Lista de portas mapeadas de dentro para fora do container
     # na notação porta_de_fora:porta_de_dentro
     ports:
       # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
       - 3000:3000
+
+  # Serviço que irá rodar o banco de dados
+  database:
+    # Imagem do dockerfile
+    image: ./db
+    ports:
+      - "3306:3036"
+    # variáveis de ambiente para acesso ao banco de dados
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: uaifood
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
 
 networks:
   default:

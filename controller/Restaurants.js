@@ -10,6 +10,8 @@ const listWithFilters = async (req, res, next) => {
   const { city, state, type, dish } = req.query;
   const data = await Restaurants.listWithFilters({ city, state, type, dish });
 
+  console.log('alou');
+
   if (!data) return next({ code: 404, message: 'nenhum restaurante encontrado.' });
 
   res.status(200).json(data);

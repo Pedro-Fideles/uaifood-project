@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS uaifood;
+
 USE uaifood;
 
 CREATE TABLE states (

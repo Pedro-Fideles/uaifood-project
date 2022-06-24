@@ -9,7 +9,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - 3306:3306
+      - 3308:3306
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-proot" ]
       timeout: 10s
@@ -19,14 +19,14 @@ services:
   api:
     build: .
     environment:
-      - APP_PORT=3000
+      - APP_PORT=3001
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=live_lecture_23_1
+      - MYSQL_DATABASE=uaifood
     ports:
-      - 3000:3000
+      - 3001:3001
     command: npm start
     depends_on:
       mysql:

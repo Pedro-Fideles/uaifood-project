@@ -21,4 +21,4 @@ app.get('/restaurants', Restaurants.listWithFilters);
 
 app.use(errorMiddleware);
 
-app.listen(3000, () => console.log('ouvindo na porta 3000'));
+app.listen(3001, () => console.log('ouvindo na porta 3001'));
